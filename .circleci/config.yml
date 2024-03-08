@@ -1,48 +1,38 @@
 version: 2.1
 orbs:
-  python: circleci/python@2.1.1
+  python: circleci/python@2.0.3
   heroku: circleci/heroku@1.2.6
 
 jobs:
-  build_and_test:
+  build_and_test: # this can be any name you choose
     executor: python/default
     steps:
       - checkout
       - python/install-packages:
           pkg-manager: pip
       - run:
-          name: Set up virtual environment and run tests
-          command: |
-            cd diaryEndpoint1
-            python -m venv venv
-            source venv/bin/activate
-            pip install -r requirements.txt
-            python tests_diary.py
+          name: Run tests
+          command: python -m pytest
       - persist_to_workspace:
-          root: ~/  # This assumes the project is directly under the home directory
+          root: ~/project
           paths:
-            - diaryEndpoint1
+            - .
 
-  deploy:
+  deploy: # this can be any name you choose
     executor: python/default
     steps:
       - attach_workspace:
-          at: ~/
-      - run:
-          name: Deploy to Heroku
-          command: |
-            cd diaryEndpoint1
-            heroku auth:token
-            git push heroku main
+          at: ~/project
+      - heroku/deploy-via-git:
+          force: true # force push when pushing to the heroku remote, see: https://devcenter.heroku.com/articles/git
 
 workflows:
-  version: 2
-  test_and_deploy:
+  test_my_app:
     jobs:
       - build_and_test
       - deploy:
           requires:
-            - build_and_test
+            - build_and_test # only deploy if the build_and_test job has completed
           filters:
             branches:
-              only: main
+              only: main # only deploy when on main
