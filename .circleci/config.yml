@@ -1,45 +1,4 @@
-# config
-
-#version: 2.1
-#orbs:
-#  python: circleci/python@2.1.1
-#  heroku: circleci/heroku@1.2.6
-#
-#jobs:
-#  build_and_test:  this can be any name you choose
-#    executor: python/default
-#    steps:
-#      - checkout
-#      - python/install-packages:
-#          pkg-manager: pip
-#      - run:
-#          name: Run tests
-#          command: python tests_diary.py
-#      - persist_to_workspace:
-#          root: ~/diaryEndpoint1
-#          paths:
-#            - .
-#
-#  deploy:  this can be any name you choose
-#    executor: python/default
-#    steps:
-#      - attach_workspace:
-#          at: ~/diaryEndpoint1
-#      - heroku/deploy-via-git:
-#          force: true force push when pushing to the heroku remote, see: https://devcenter.heroku.com/articles/git
-
-#workflows:
-#  test_my_app:
-#    jobs:
-#      - build_and_test
-#      - deploy:
-#          requires:
-#            - build_and_test  only deploy if the build_and_test job has completed
-#          filters:
-#            branches:
-#              only: main  only deploy when on main
 version: 2.1
-
 orbs:
   python: circleci/python@2.1.1
   heroku: circleci/heroku@1.2.6
@@ -54,35 +13,24 @@ jobs:
       - run:
           name: Set up virtual environment and run tests
           command: |
+            cd /Users/monicah/diaryEndpoint1
             python -m venv venv
             source venv/bin/activate
             pip install -r requirements.txt
             python tests_diary.py
       - persist_to_workspace:
-          root: ~/diaryEndpoint1
+          root: /Users/monicah
           paths:
-            - venv
-            - .
+            - diaryEndpoint1
 
   deploy:
     executor: python/default
     steps:
       - attach_workspace:
-          at: ~/diaryEndpoint1
+          at: /Users/monicah
       - run:
           name: Deploy to Heroku
           command: |
+            cd /Users/monicah/diaryEndpoint1
             heroku auth:token
-            git push heroku main  # Adjust branch name if needed
-
-workflows:
-  version: 2
-  test_and_deploy:
-    jobs:
-      - build_and_test
-      - deploy:
-          requires:
-            - build_and_test
-          filters:
-            branches:
-              only: main
+            git push heroku main
