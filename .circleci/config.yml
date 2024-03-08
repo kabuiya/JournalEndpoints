@@ -1,5 +1,4 @@
 version: 2.1
-
 orbs:
   python: circleci/python@2.1.1
   heroku: circleci/heroku@1.2.6
@@ -14,35 +13,24 @@ jobs:
       - run:
           name: Set up virtual environment and run tests
           command: |
+            cd /Users/monicah/diaryEndpoint1
             python -m venv venv
             source venv/bin/activate
             pip install -r requirements.txt
             python tests_diary.py
       - persist_to_workspace:
-          root: ~/diaryEndpoint1
+          root: /Users/monicah
           paths:
-            - venv
-            - .
+            - diaryEndpoint1
 
   deploy:
     executor: python/default
     steps:
       - attach_workspace:
-          at: ~/diaryEndpoint1
+          at: /Users/monicah
       - run:
           name: Deploy to Heroku
           command: |
+            cd /Users/monicah/diaryEndpoint1
             heroku auth:token
-            git push heroku main  # Adjust branch name if needed
-
-workflows:
-  version: 2
-  test_and_deploy:
-    jobs:
-      - build_and_test
-      - deploy:
-          requires:
-            - build_and_test
-          filters:
-            branches:
-              only: main
+            git push heroku main
