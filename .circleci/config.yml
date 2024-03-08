@@ -12,7 +12,7 @@ jobs:
           pkg-manager: pip
       - run:
           name: Run tests
-          command: pytest tests_diary.py
+          command: python -m unittest tests_diary
       - persist_to_workspace:
           root: ~/project
           paths:
