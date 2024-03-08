@@ -13,13 +13,13 @@ jobs:
       - run:
           name: Set up virtual environment and run tests
           command: |
-            cd /Users/monicah/diaryEndpoint1
+            cd diaryEndpoint1
             python -m venv venv
             source venv/bin/activate
             pip install -r requirements.txt
             python tests_diary.py
       - persist_to_workspace:
-          root: /Users/monicah
+          root: ~/  # This assumes the project is directly under the home directory
           paths:
             - diaryEndpoint1
 
@@ -27,14 +27,13 @@ jobs:
     executor: python/default
     steps:
       - attach_workspace:
-          at: /Users/monicah
+          at: ~/
       - run:
           name: Deploy to Heroku
           command: |
-            cd /Users/monicah/diaryEndpoint1
+            cd diaryEndpoint1
             heroku auth:token
             git push heroku main
-
 
 workflows:
   version: 2
