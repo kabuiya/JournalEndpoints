@@ -61,6 +61,17 @@ jobs:
           name: Upload Coverage to Coveralls
           command: |
             coveralls
+workflows:
+  test_my_app:
+    jobs:
+      - build_and_test
+      - deploy:
+          requires:
+            - build_and_test
+          filters:
+            branches:
+              only: main
+
 #version: 2.1
 #
 #jobs:
