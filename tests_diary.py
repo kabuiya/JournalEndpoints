@@ -2,8 +2,6 @@ import unittest
 from diary import app, entr
 import json
 
-from models import Entries
-
 
 class TestsDiary(unittest.TestCase):
     def setUp(self):
@@ -54,4 +52,4 @@ class TestsDiary(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
-#run
+# run
