@@ -2,8 +2,6 @@ import unittest
 from diary import app, entr
 import json
 
-from models import Entries
-
 
 class TestsDiary(unittest.TestCase):
     def setUp(self):
@@ -41,9 +39,12 @@ class TestsDiary(unittest.TestCase):
         self.assertEqual(response.get_json(), self.added_entry)
 
     def test_update_entry(self):
+        """
+        tests update entry
+        """
         self.add_entry()
-        data = {"content": "Testing add_entries updated v"}
-        res = {"content": "Testing add_entries updated v", "id": 0}
+        data = {"content": "Testing add_entries updated version 1"}
+        res = {"content": "Testing add_entries updated version 1", "id": 0}
         response = self.client.put('/api/v1/update/0', json=data)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.get_json(), [res])
@@ -51,4 +52,4 @@ class TestsDiary(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
-#run
+# run
