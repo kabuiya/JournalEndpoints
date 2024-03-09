@@ -41,6 +41,9 @@ class TestsDiary(unittest.TestCase):
         self.assertEqual(response.get_json(), self.added_entry)
 
     def test_update_entry(self):
+        """
+        tests update entry
+        """
         self.add_entry()
         data = {"content": "Testing add_entries updated v"}
         res = {"content": "Testing add_entries updated v", "id": 0}
