@@ -50,6 +50,6 @@ def del_entry(entry_id):
     else:
         return jsonify({"error": "Entry not found"}), 400
 
-
+# run
 if __name__ == '__main__':
     app.run(debug=True)
