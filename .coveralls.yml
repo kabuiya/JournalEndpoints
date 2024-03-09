@@ -1,1 +1,1 @@
-repo_token: $COVERALLS_REPO_TOKEN  # token
+repo_token:  $COVERALLS_REPO_TOKEN  # token
