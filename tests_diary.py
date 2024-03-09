@@ -45,8 +45,8 @@ class TestsDiary(unittest.TestCase):
         tests update entry
         """
         self.add_entry()
-        data = {"content": "Testing add_entries updated v"}
-        res = {"content": "Testing add_entries updated v", "id": 0}
+        data = {"content": "Testing add_entries updated version 1"}
+        res = {"content": "Testing add_entries updated version 1", "id": 0}
         response = self.client.put('/api/v1/update/0', json=data)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.get_json(), [res])
