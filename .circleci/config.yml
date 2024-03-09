@@ -61,6 +61,8 @@ jobs:
           name: Upload Coverage to Coveralls
           command: |
             coveralls
+          environment:
+            COVERALLS_REPO_TOKEN: $COVERALLS_REPO_TOKEN
 
 
 
@@ -74,8 +76,8 @@ jobs:
 #
 #    steps:
 #      - checkout
-
-      # Optionally, set up a virtual environment
+#
+#       Optionally, set up a virtual environment
 #      - run:
 #          name: Set up virtual environment
 #          command: |
@@ -100,7 +102,7 @@ jobs:
 #
 #    steps:
 #      - checkout
-
+#
 #
 #      - run:
 #          name: Set up virtual environment
